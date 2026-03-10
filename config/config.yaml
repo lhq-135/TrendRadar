@@ -1,156 +1,100 @@
-# ═══════════════════════════════════════════════════════════════
-#                    TrendRadar 配置文件 (优化版)
-#                       Version: 2.0.0
-# ═══════════════════════════════════════════════════════════════
-
-# ===============================================================
-# 1. 基础设置
-# ===============================================================
 app:
   timezone: "Asia/Shanghai"
   show_version_update: true
-
-# ===============================================================
-# 1.5 调度系统 —— 智能管理推送时间
-# ===============================================================
 schedule:
   enabled: true
-  preset: "morning_evening"              # 推荐模式：全天推送 + 晚间当日汇总
-
-# ===============================================================
-# 2. 数据源 - 精选热榜平台
-# ===============================================================
+  preset: morning_evening
 platforms:
   enabled: true
   sources:
-  # --- 综合/新闻 ---
-  - id: "toutiao"
-    name: "今日头条"
-  - id: "baidu"
-    name: "百度热搜"
-
-  # --- 财经/深度 ---
-  - id: "wallstreetcn-hot"
-    name: "华尔街见闻 最热"
-  - id: "wallstreetcn-news"
-    name: "华尔街见闻 最新"
-
-  # --- 科技/社区 (重点保留) ---
-  - id: "zhihu"
-    name: "知乎"
-  - id: "ithome"
-    name: "IT之家"
-  - id: "juejin"
-    name: "掘金"
-  - id: "github"
-    name: "GitHub"
-  - id: "hackernews"
-    name: "Hacker News"
-  - id: "solidot"
-    name: "Solidot"
-
-# ===============================================================
-# 3. 数据源 - RSS 订阅
-# ===============================================================
+    - id: toutiao
+      name: "今日头条"
+    - id: baidu
+      name: "百度热搜"
+    - id: wallstreetcn-hot
+      name: "华尔街见闻 最热"
+    - id: wallstreetcn-news
+      name: "华尔街见闻 最新"
+    - id: zhihu
+      name: "知乎"
+    - id: ithome
+      name: "IT之家"
+    - id: juejin
+      name: "掘金"
+    - id: github
+      name: "GitHub"
+    - id: hackernews
+      name: "Hacker News"
+    - id: solidot
+      name: "Solidot"
 rss:
   enabled: true
   freshness_filter:
     enabled: true
-    max_age_days: 2                   # 仅推送 2 天内的新鲜文章
-
+    max_age_days: 2
   feeds:
-    - id: "hacker-news"
+    - id: hacker-news
       name: "Hacker News"
       url: "https://hnrss.org/frontpage"
-
-    - id: "ruanyifeng"
+    - id: ruanyifeng
       name: "阮一峰的网络日志"
       url: "http://www.ruanyifeng.com/blog/atom.xml"
-      max_age_days: 7                 # 博客类更新慢，放宽到 7 天
-
-# ===============================================================
-# 4. 报告模式
-# ===============================================================
+      max_age_days: 7
 report:
-  mode: "current"                     # 默认当前榜单模式
-  display_mode: "keyword"             # 按关键词分组显示
-  sort_by_position_first: false       # 按匹配条数排序，最热的在前
-  rank_threshold: 5                   # 前 5 名高亮显示
-  max_news_per_keyword: 5             # 防止单一关键词刷屏
-
-# ===============================================================
-# 5. 推送内容控制
-# ===============================================================
+  mode: current
+  display_mode: keyword
+  sort_by_position_first: false
+  rank_threshold: 5
+  max_news_per_keyword: 5
 display:
   region_order:
-    - ai_analysis                     # 将 AI 分析置顶，快速获取摘要
+    - ai_analysis
     - new_items
     - hotlist
     - rss
-  
   regions:
     hotlist: true
-    new_items: true                   # 开启新增提醒
+    new_items: true
     rss: true
-    standalone: false                 # 保持关闭，避免消息过长
+    standalone: false
     ai_analysis: true
-
   standalone:
-    platforms: ["zhihu", "wallstreetcn-hot"]
+    platforms:
+      - zhihu
+      - wallstreetcn-hot
     max_items: 15
-
-# ===============================================================
-# 6. 推送通知 (请在 GitHub Secrets 中配置 API Key)
-# ===============================================================
 notification:
   enabled: true
   channels:
-    # 建议优先使用 Telegram 或 Bark
     telegram:
-      bot_token: ""                   # 建议填入环境变量
+      bot_token: ""
       chat_id: ""
     bark:
-      url: ""                         # iOS 用户推荐
-
-# ===============================================================
-# 8. AI 模型配置 (核心驱动)
-# ===============================================================
+      url: ""
 ai:
-  model: "openai/GLM-4.7-Flash"       # 已切换为您要求的模型
-  api_key: ""                         # 建议填入环境变量 AI_API_KEY
-  api_base: ""                        # 如果是官方接口请留空
+  model: "openai/GLM-4.7-Flash"
+  api_key: ""
+  api_base: ""
   timeout: 120
-  temperature: 1.0
+  temperature: 1
   max_tokens: 4096
-  num_retries: 2                      # 增加一次重试机会
-
-# ===============================================================
-# 9. AI 分析功能
-# ===============================================================
+  num_retries: 2
 ai_analysis:
   enabled: true
   language: "Chinese"
-  mode: "follow_report"
-  max_news_for_analysis: 150          # 允许分析足够多的上下文
-  include_rss: true                   # 将 RSS 纳入分析
+  mode: follow_report
+  max_news_for_analysis: 150
+  include_rss: true
   include_standalone: true
-  include_rank_timeline: true         # 开启排名变化轨迹，AI 分析更准
-
-# ===============================================================
-# 10. AI 翻译功能
-# ===============================================================
+  include_rank_timeline: true
 ai_translation:
   enabled: true
   language: "中文"
-
-# ===============================================================
-# 7. 存储配置
-# ===============================================================
 storage:
-  backend: "auto"
+  backend: auto
   formats:
     sqlite: true
-    html: true                        # 开启 HTML 报告
+    html: true
   local:
-    data_dir: "output"
-    retention_days: 30                # 保留 30 天历史数据供回溯
+    data_dir: output
+    retention_days: 30
