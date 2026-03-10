@@ -34,11 +34,11 @@ rss:
     max_age_days: 2
   feeds:
     - id: hacker-news
-      name: "Hacker News"
-      url: "https://hnrss.org/frontpage"
+      name: "lucky配置那个"
+      url: "https://www.ytca.top/"
     - id: ruanyifeng
-      name: "阮一峰的网络日志"
-      url: "http://www.ruanyifeng.com/blog/atom.xml"
+      name: "二叉树"
+      url: "https://2x.nz/"
       max_age_days: 7
 report:
   mode: current
