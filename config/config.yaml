@@ -176,7 +176,7 @@ rss:
   freshness_filter:
     enabled: true                     # 是否启用新鲜度过滤（默认启用）
 
-    max_age_days: 3                   # 最大文章年龄（天）
+    max_age_days: 2                   # 最大文章年龄（天）
                                       # - 正整数：只推送 N 天内的文章
                                       # - 0：禁用过滤，推送所有文章
 
@@ -582,7 +582,7 @@ advanced:
 
   # 消息分批大小（字节）- 内部配置，请勿修改
   batch_size:
-    default: 4000
+    默认: 4000
     dingtalk: 20000
     feishu: 30000
     bark: 4000
