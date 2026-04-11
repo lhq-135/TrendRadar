@@ -80,7 +80,7 @@ ai:
   max_tokens: 4096
   num_retries: 2
 ai_analysis:
-  enabled: true
+  enabled: false
   language: "Chinese"
   mode: follow_report
   max_news_for_analysis: 150
